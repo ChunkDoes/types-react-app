@@ -1,23 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
+import TypesFileDrop from './Components/TypesFileDrop';
+import XMLViewer from './Components/XMLViewer';
+import { useState } from 'react';
+import { Buffer } from 'buffer';
+
+
+window.Buffer = Buffer;
 
 function App() {
+  const [xmlDoc, setXmlDoc] = useState(null);
+  // parse xml content when the file is dropped
+  const handleFileParsed = (xmlDoc) => {
+    
+      setXmlDoc(xmlDoc);
+    };
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      {/* Nav Bars here. One general Nav, a lower one with totals and percentages */}
+      <h1>Drag and Drop File Upload</h1>
+      <TypesFileDrop onFileParsed={handleFileParsed} />
+      {xmlDoc ? <XMLViewer xmlDoc={xmlDoc} /> : <p>No XML file uploaded yet.</p>}
     </div>
   );
 }
